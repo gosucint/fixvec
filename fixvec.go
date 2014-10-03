@@ -23,14 +23,14 @@ type FixVec interface {
 	// Num returns the number of elemens in V
 	Num() uint64
 
-	// MarshalBinary encodes the FixVec into a binary form and returns the result.
+	// MarshalBinary encodes FixVec into a binary form and returns the result.
 	MarshalBinary() ([]byte, error)
 
 	// UnmarshalBinary decodes the FixVec from a binary from generated MarshalBinary
 	UnmarshalBinary([]byte) error
 }
 
-// New returns a FixVec represents V[0...n) where each element is less than (1 << blen).
+// New returns FixVec represents V[0...n) where each element is less than (1 << blen).
 func New(n uint64, bl uint8) FixVec {
 	if bl > 64 {
 		return nil
@@ -52,13 +52,13 @@ func NewFromArray(vs []uint64) FixVec {
 	}
 	num := uint64(len(vs))
 	if dim == 0 {
-		return NewFixVec(num, 0)
+		return New(num, 0)
 	}
 	max := dim - 1
 	blen := uint8(0)
 	for ; (max >> blen) > 0; blen++ {
 	}
-	fv := NewFixVec(num, blen)
+	fv := New(num, blen)
 	for i := uint64(0); i < num; i++ {
 		fv.Set(i, vs[i])
 	}

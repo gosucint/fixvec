@@ -47,7 +47,7 @@ func TestLargeFixVecFromArray(t *testing.T) {
 				for i := uint64(0); i < num; i++ {
 					orig[i] = uint64(rand.Int63() % (1 << blen))
 				}
-				vv := NewFixVecFromArray(orig)
+				vv := NewFromArray(orig)
 				for i := 0; i < 10; i++ {
 					ind := uint64(rand.Int31n(int32(num)))
 					So(vv.Get(ind), ShouldEqual, orig[ind])
