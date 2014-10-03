@@ -30,8 +30,8 @@ type FixVec interface {
 	UnmarshalBinary([]byte) error
 }
 
-// NewFixVec returns a FixVec represents V[0...n) where each element is less than (1 << blen).
-func NewFixVec(n uint64, bl uint8) FixVec {
+// New returns a FixVec represents V[0...n) where each element is less than (1 << blen).
+func New(n uint64, bl uint8) FixVec {
 	if bl > 64 {
 		return nil
 	}
@@ -42,8 +42,8 @@ func NewFixVec(n uint64, bl uint8) FixVec {
 	}
 }
 
-// NewFixVec returns a FixVec represents V[0...n) where each element V[i] equals to vs[i]
-func NewFixVecFromArray(vs []uint64) FixVec {
+// NewFromArray returns a FixVec represents V[0...n) where each element V[i] equals to vs[i]
+func NewFromArray(vs []uint64) FixVec {
 	dim := uint64(0)
 	for _, v := range vs {
 		if v >= dim {

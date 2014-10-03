@@ -11,7 +11,7 @@ const (
 )
 
 func TestEmptyFixVec(t *testing.T) {
-	vv := NewFixVec(0, 0)
+	vv := New(0, 0)
 	Convey("When an input is empty", t, func() {
 		So(vv.Num(), ShouldEqual, 0)
 		So(vv.Blen(), ShouldEqual, 0)
@@ -23,7 +23,7 @@ func TestLargeFixVec(t *testing.T) {
 		for blen := uint8(0); blen < 64; blen++ {
 			for iter := 0; iter < testIter; iter++ {
 				num := uint64(rand.Int31n(1000))
-				vv := NewFixVec(num, blen)
+				vv := New(num, blen)
 				orig := make([]uint64, num)
 				for i := uint64(0); i < num; i++ {
 					orig[i] = uint64(rand.Int63() % (1 << blen))
@@ -55,7 +55,7 @@ func TestLargeFixVecFromArray(t *testing.T) {
 
 				out, err := vv.MarshalBinary()
 				So(err, ShouldBeNil)
-				newvv := NewFixVec(0, 0)
+				newvv := New(0, 0)
 				err = newvv.UnmarshalBinary(out)
 				So(err, ShouldBeNil)
 				So(newvv.Num(), ShouldEqual, vv.Num())
