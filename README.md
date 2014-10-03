@@ -14,12 +14,20 @@ Usage
 ```
 import "github.com/hillbig/fixvec"
 
-fv := fixvec.New(1000, 10)  // fv represents V[0...1000), 0 <= V[i] < 2^10
-                                  // fv requires 1000 * 10 = 10000bits = 1250 bytes.
+// fv represents V[0...1000), 0 <= V[i] < 2^10
+// fv requires 1000 * 10 = 10000bits = 1250 bytes.
+fv := fixvec.New(1000, 10)  
+                               
+// use Set(ind, val) to set value V[ind]= val
 fv.Set(10, 777)
-fmt.Printf("%d\n", fv.Get(10)) // V[10]
 
-bytes, err := fv.MarshalBinary() // Encode to binary representation
+// use Get(ind) to get value V[ind]
+fmt.Printf("%d\n", fv.Get(10)) // 777
+
+// Encode to binary representation
+bytes, err := fv.MarshalBinary() 
+
+// Decode from binary presentation
 newfv := fixvec.NewFixVec(0, 0)
-err := newfv.UnmarshalBinary(bytes) // Decode from binary presentation
+err := newfv.UnmarshalBinary(bytes) 
 ```
