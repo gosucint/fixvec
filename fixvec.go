@@ -2,7 +2,6 @@
 package fixvec
 
 import (
-	"bytes"
 	"github.com/ugorji/go/codec"
 )
 
@@ -115,9 +114,8 @@ func (vv fixVecImpl) PushBack(val uint64) uint64 {
 }
 
 func (vv fixVecImpl) MarshalBinary() (out []byte, err error) {
-	w := new(bytes.Buffer)
-	var bh codec.BincHandle
-	enc := codec.NewEncoder(w, &bh)
+	var bh codec.MsgpackHandle
+	enc := codec.NewEncoderBytes(&out, &bh)
 	err = enc.Encode(vv.bits)
 	if err != nil {
 		return
@@ -130,13 +128,12 @@ func (vv fixVecImpl) MarshalBinary() (out []byte, err error) {
 	if err != nil {
 		return
 	}
-	out = w.Bytes()
 	return
 }
+
 func (vv *fixVecImpl) UnmarshalBinary(in []byte) (err error) {
-	r := bytes.NewBuffer(in)
-	var bh codec.BincHandle
-	dec := codec.NewDecoder(r, &bh)
+	var bh codec.MsgpackHandle
+	dec := codec.NewDecoderBytes(in, &bh)
 	err = dec.Decode(&vv.bits)
 	if err != nil {
 		return
